@@ -1,6 +1,7 @@
 package com.oriontek.client_manager.entities;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,25 +13,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Direccion")
+@Table(name = "Address")
 @Data
 @NoArgsConstructor
-public class Direccion {
+public class Address {
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column
-    private String direccionCompleta;
+    private String street;
+    private String city;
+    private String country;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
-    private Cliente cliente;
-
-    public Direccion(String direccion){
-        this.direccionCompleta = direccion;
-    }
+    @JoinColumn(name = "client_id", nullable = false)
+    @JsonBackReference
+    private Client client;
 
 }
